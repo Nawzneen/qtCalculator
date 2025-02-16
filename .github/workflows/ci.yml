@@ -1,0 +1,25 @@
+name: Qt CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '5.15.2'
+
+    - name: Build project
+      run: |
+        qmake
+        make
+
+    # - name: Run Tests
+    #   run: ./tests || echo 'No tests implemented'
+
