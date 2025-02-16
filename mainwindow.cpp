@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_7, SIGNAL(released()), this, SLOT(digit_pressed()));
     connect(ui->pushButton_8, SIGNAL(released()), this, SLOT(digit_pressed()));
     connect(ui->pushButton_9, SIGNAL(released()), this, SLOT(digit_pressed()));
-
+    connect(ui->pushButton_plusMinus, SIGNAL(released()), this, SLOT(unary_operation_pressed()));
 }
 
 MainWindow::~MainWindow()
@@ -31,9 +31,41 @@ void MainWindow::digit_pressed()
 {
     qDebug() << "test";
     QPushButton* button = qobject_cast<QPushButton*>(sender());
+    qDebug() << button;
     double labelNumber;
     QString newLabelText;
-    labelNumber = (ui->label->text() + button->text()).toDouble();
+
+    if(ui->label->text()=="0" || ui->label->text()=="LabelText"){
+        newLabelText = button->text();
+    }else{
+        newLabelText= ui->label->text() + button->text();
+    }
+
+    labelNumber = newLabelText.toDouble();
     newLabelText = QString::number(labelNumber, 'g',15);
     ui->label->setText(newLabelText);
 }
+
+void MainWindow::on_pushButton_decimal_released()
+{
+    if(ui->label->text().contains(".")){
+        return;
+    }else{
+        ui->label->setText( ui->label->text() + ".");
+    }
+
+}
+void MainWindow::unary_operation_pressed()
+{
+    // QPushButton * button = (QPushButton*) sender()
+    QPushButton * button = qobject_cast<QPushButton*>(sender());
+    double labelNumber;
+    QString newLabelText;
+    if(button->text()=="+/-"){
+        labelNumber = ui->label->text().toDouble();
+        labelNumber = labelNumber * -1;
+        newLabelText = QString::number(labelNumber, 'g', 15);
+        ui->label-> setText(newLabelText);
+    }
+}
+

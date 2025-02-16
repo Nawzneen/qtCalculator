@@ -32,7 +32,7 @@
 background-color : white;</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_clear">
